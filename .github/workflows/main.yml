@@ -25,7 +25,7 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
 
     - name: Publish console app
-      run: dotnet publish MyConsoleApp/MyConsoleApp.csproj --configuration Release --no-build --output publish
+      run: dotnet publish MyConsoleApp/MyConsoleApp.csproj --configuration Release --no-build --output ./publish/
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
@@ -36,12 +36,19 @@ jobs:
   validate:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
     - name: Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v2
       with:
         name: MyConsoleApp
 
-    - name: Run the console app
-      run: chmod +x MyConsoleApp/MyConsoleApp && ./MyConsoleApp/MyConsoleApp
+    - name: Check current working directory
+      run: pwd
+
+    - name: List files in current working directory
+      run: ls -la
+
+    - name: Try running the console app
+      run: |
+        chmod +x ./MyConsoleApp/MyConsoleApp.dll  # adjust this based on your actual file path and name
+        dotnet ./MyConsoleApp/MyConsoleApp.dll  # adjust this based on your actual file path and name
