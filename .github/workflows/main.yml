@@ -38,9 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: MyConsoleApp
+        path: ./publish
 
     - name: Check current working directory
       run: pwd
@@ -50,5 +51,5 @@ jobs:
 
     - name: Try running the console app
       run: |
-        chmod +x ./MyConsoleApp/MyConsoleApp.dll  # adjust this based on your actual file path and name
-        dotnet ./MyConsoleApp/MyConsoleApp.dll  # adjust this based on your actual file path and name
+        chmod +x ./publish/MyConsoleApp
+        ./publish/MyConsoleApp  # adjust this based on your actual file path and name
