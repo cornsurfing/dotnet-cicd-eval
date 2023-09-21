@@ -1,0 +1,47 @@
+name: .NET Core CI/CD in Container
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:6.0
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build solution
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run unit tests
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: Publish console app
+      run: dotnet publish MyConsoleApp/MyConsoleApp.csproj --configuration Release --no-build --output publish
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: MyConsoleApp
+        path: MyConsoleApp/publish/
+
+  validate:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: MyConsoleApp
+
+    - name: Run the console app
+      run: chmod +x MyConsoleApp/MyConsoleApp && ./MyConsoleApp/MyConsoleApp
