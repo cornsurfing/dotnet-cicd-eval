@@ -12,6 +12,11 @@ jobs:
       image: wuuker/dotnet_sdk_nodejs:6.0-20.x
 
     steps:
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20.x
+
     - name: Checkout code
       uses: actions/checkout@v4
 
