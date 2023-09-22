@@ -1,0 +1,55 @@
+name: .NET Core CI/CD in Containerized Environment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:6.0
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build solution
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run unit tests
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: Publish console app
+      run: dotnet publish MyConsoleApp/MyConsoleApp.csproj --configuration Release --no-build --output ./publish/
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: MyConsoleApp
+        path: ./publish/
+
+  validate:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: MyConsoleApp
+        path: ./publish
+
+    - name: Check current working directory
+      run: pwd
+
+    - name: List files in current working directory
+      run: ls -la
+
+    - name: Try running the console app
+      run: |
+        chmod +x ./publish/MyConsoleApp
+        ./publish/MyConsoleApp  # adjust this based on your actual file path and name
