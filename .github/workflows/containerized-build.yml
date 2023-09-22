@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: $RUNS_ON
 
     container:
       image: my_dotnet_6_build
@@ -38,7 +38,7 @@ jobs:
 
   validate:
     needs: build
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: $RUNS_ON
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v3

@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: $RUNS_ON
 
     steps:
     - name: Checkout code
@@ -41,7 +41,7 @@ jobs:
 
   validate:
     needs: build
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: $RUNS_ON
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v3
