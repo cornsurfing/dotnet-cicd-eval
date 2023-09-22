@@ -9,7 +9,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: my_dotnet_6_build
+      image: wuuker/dotnet_sdk_nodejs:6.0-20.x
 
     steps:
     - name: Checkout code
