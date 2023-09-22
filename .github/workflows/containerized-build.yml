@@ -1,15 +1,18 @@
 name: .NET Core CI/CD in Containerized Environment
 
+env:
+  RUNS_ON: self-hosted
+
 on:
   push:
     branches: [ main ]
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ${{ env.RUNS_ON }}
 
     container:
-      image: mcr.microsoft.com/dotnet/sdk:6.0
+      image: my_dotnet_6_build
 
     steps:
     - name: Checkout code
@@ -35,7 +38,7 @@ jobs:
 
   validate:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.RUNS_ON }}
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v3

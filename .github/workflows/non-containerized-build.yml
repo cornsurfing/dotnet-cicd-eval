@@ -1,5 +1,8 @@
 name: .NET Core CI/CD in non-Containerized Environment
 
+env:
+  RUNS_ON: self-hosted
+
 on:
   push:
     branches:
@@ -7,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ${{ env.RUNS_ON }}
 
     steps:
     - name: Checkout code
@@ -38,7 +41,7 @@ jobs:
 
   validate:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.RUNS_ON }}
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v3
@@ -56,3 +59,4 @@ jobs:
       run: |
         chmod +x ./publish/MyConsoleApp
         ./publish/MyConsoleApp  # adjust this based on your actual file path and name
+
