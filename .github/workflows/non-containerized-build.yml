@@ -1,16 +1,12 @@
 name: .NET Core CI/CD in non-Containerized Environment
 
-env:
-  RUNS_ON: self-hosted
-
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
-    runs-on: $RUNS_ON
+    runs-on: self-hosted
 
     steps:
     - name: Checkout code
@@ -41,7 +37,7 @@ jobs:
 
   validate:
     needs: build
-    runs-on: $RUNS_ON
+    runs-on: self-hosted
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v3
