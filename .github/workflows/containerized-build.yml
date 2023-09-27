@@ -9,7 +9,7 @@ jobs:
     runs-on: arc-runner-set
 
     container:
-      image: wuuker/dotnet_sdk_nodejs:6.0-20.x
+      image: mcr.microsoft.com/dotnet/sdk:6.0
 
     steps:
     - name: ls /__e folder
