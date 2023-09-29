@@ -39,7 +39,9 @@ jobs:
 
   validate:
     needs: build
-    runs-on: self-hosted
+    runs-on: arc-runner-set
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:6.0
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v3
