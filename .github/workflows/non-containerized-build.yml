@@ -37,14 +37,19 @@ jobs:
 
   validate:
     needs: build
-    runs-on: self-hosted
+    runs-on: arc-runner-set
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v3
       with:
         name: MyConsoleApp
         path: ./publish
-
+        
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+        
     - name: Check current working directory
       run: pwd
 
