@@ -11,7 +11,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
+    - name: echo PATH
+      run: echo $PATH
+      
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
       with:
