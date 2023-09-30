@@ -11,8 +11,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: echo PATH
-      run: echo $PATH
+    
+    - name: whoami
+      run: whoami
+      
+    - name: Install curl
+      run: apt update && apt install wget curl -y
       
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
